@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class EnemyMovementHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] List<Waypoint> waypoints = new List<Waypoint>();
+    [SerializeField] float coroutineWaitTime = 1f;
+
+    void Start() 
     {
-        
+        Debug.Log("Start");
+        StartCoroutine(FollowWaypoints());
+        Debug.Log("Start Moving");
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator FollowWaypoints()
     {
-        
+        foreach (Waypoint waypoint in waypoints)
+        {
+            transform.position = waypoint.transform.position;
+            yield return new WaitForSeconds(coroutineWaitTime);
+        }
     }
 }
